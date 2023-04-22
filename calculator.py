@@ -1,32 +1,72 @@
-# Simple calculator in Python
+import tkinter as tk
 
-choice = 0
+class Calculator:
+    def __init__(self, master):
+        self.master = master
+        master.title("Calculator")
 
-# Loop until the user enters a valid choice
-while choice not in range(1, 5):
-    # Display the menu of options
-    print("Select operation.\n1. Add\n2. Subtract\n3. Multiply\n4. Divide")
+        # Create labels and entry fields for user input
+        self.label1 = tk.Label(master, text="Enter first number:")
+        self.label1.pack()
+        self.entry1 = tk.Entry(master)
+        self.entry1.pack()
 
-    # Take input from the user
-    choice = int(input("Enter choice(1/2/3/4): "))
+        self.label2 = tk.Label(master, text="Enter second number:")
+        self.label2.pack()
+        self.entry2 = tk.Entry(master)
+        self.entry2.pack()
 
-    # Check if the user's choice is valid
-    if choice not in range(1, 5):
-        print("Invalid input. Please try again.\n")
+        # Create buttons for user to select operation
+        self.add_button = tk.Button(master, text="+", command=self.add)
+        self.add_button.pack()
 
-# Take input for the numbers to perform the operation on
-x = float(input("Enter first number: "))
-y = float(input("Enter second number: "))
+        self.subtract_button = tk.Button(master, text="-", command=self.subtract)
+        self.subtract_button.pack()
 
-# Perform calculation based on user input
-if choice == 1:
-    print(x, "+", y, "=", x + y)
+        self.multiply_button = tk.Button(master, text="*", command=self.multiply)
+        self.multiply_button.pack()
 
-elif choice == 2:
-    print(x, "-", y, "=", x - y)
+        self.divide_button = tk.Button(master, text="/", command=self.divide)
+        self.divide_button.pack()
 
-elif choice == 3:
-    print(x, "*", y, "=", x * y)
+        # Create label to display result
+        self.result_label = tk.Label(master, text="")
+        self.result_label.pack()
 
-elif choice == 4:
-    print(x, "/", y, "=", x / y)
+    # A method to get user inputs
+    def get_inputs(self):
+        x = float(self.entry1.get())
+        y = float(self.entry2.get())
+        return x, y
+
+    # Methods to perform calculations based on user input
+    def add(self):
+        x, y = self.get_inputs()
+        result = x + y
+        self.display_result(result)
+
+    def subtract(self):
+        x, y = self.get_inputs()
+        result = x - y
+        self.display_result(result)
+
+    def multiply(self):
+        x, y = self.get_inputs()
+        result = x * y
+        self.display_result(result)
+
+    def divide(self):
+        x, y = self.get_inputs()
+        result = x / y
+        self.display_result(result)
+
+    # A method to display the result of the calculation
+    def display_result(self, result):
+        self.result_label.config(text=f"Result: {result}")
+
+# Create the Tkinter root window and the Calculator object
+root = tk.Tk()
+calculator = Calculator(root)
+
+# Run the main event loop
+root.mainloop()
